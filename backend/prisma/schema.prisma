@@ -2,7 +2,6 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -13,8 +12,6 @@ datasource db {
 
 model Candidate {
   registrationNumber String    @id
-  fullName           String?
-  dateOfBirth        DateTime?
   scores             Score[]
 }
 
