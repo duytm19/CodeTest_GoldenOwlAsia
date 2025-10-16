@@ -5,6 +5,7 @@ RUN npm install
 COPY . .
 RUN npx prisma generate
 RUN npm run build
+RUN npx prisma db seed
 
 FROM node:18-alpine
 WORKDIR /app
@@ -18,4 +19,4 @@ COPY --from=builder /app/dist ./dist
 
 EXPOSE 3000
 
-CMD [ "node", "dist/index.js" ]
+CMD [ "node", "dist/server.js" ]
