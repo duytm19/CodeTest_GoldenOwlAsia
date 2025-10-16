@@ -8,4 +8,6 @@ const candidateController = new CandidateController();
 
 router.get('/search',validate(searchCandidateDTO),candidateController.searchScore);
 
+router.get('/statistic',candidateController.getSubjectStatistics)
+
 export default router;

@@ -26,6 +26,24 @@ export class CandidateController {
     }
   }
   
+public getSubjectStatistics= async(req: Request, res: Response):Promise<void> =>{
+    try {
 
+      const statistics = await this.candidateService.getSubjectStatistics();
+      
+      res.status(200).json({
+        success: true,
+        message: 'Search score successfully',
+        data: statistics,
+      });
+
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: 'Failed to Search score',
+        error: error instanceof Error ? error.message : String(error)
+      });
+    }
+  }
 
 };
