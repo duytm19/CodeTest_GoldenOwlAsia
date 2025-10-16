@@ -6,7 +6,6 @@ export class CandidateController {
   private candidateService = new CandidateService();  
 
   public searchScore= async(req: Request<{},{}, {},SearchCandidateInput['query']>, res: Response):Promise<void> =>{
-     console.log("hiii")
     try {
     
       const {registrationNumber} = req.query;
