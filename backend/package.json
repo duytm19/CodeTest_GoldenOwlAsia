@@ -7,10 +7,10 @@
     "dev": "tsx watch --clear-screen=false src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "seed": "ts-node prisma/data/seed.ts"
+    "seed": "ts-node prisma/seed.ts"
   },
   "prisma": {
-    "seed": "ts-node prisma/data/seed.ts"
+    "seed": "ts-node prisma/seed.ts"
   },
   "keywords": [],
   "author": "",
