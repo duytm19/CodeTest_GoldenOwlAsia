@@ -32,4 +32,6 @@ model Score {
   subject     Subject @relation(fields: [subjectCode], references: [code])
 
   @@id([candidateRegistrationNumber, subjectCode])
+
+  @@index([candidateRegistrationNumber])
 }
