@@ -1,0 +1,19 @@
+.layout-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex-grow: 1;
+  margin-left: 250px; /* Same as expanded sidebar width */
+  transition: margin-left 0.3s ease-in-out;
+  background-color: #f4f7f9;
+}
+
+.main-content.collapsed {
+  margin-left: 80px; /* Same as collapsed sidebar width */
+}
+
+.page-content {
+  padding: 2rem;
+}

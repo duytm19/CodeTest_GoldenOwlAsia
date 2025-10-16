@@ -1,0 +1,58 @@
+.sidebar {
+  width: 250px;
+  background: linear-gradient(to bottom, #ffeb3b, #4caf50); /* Yellow to Green gradient */
+  color: #333;
+  transition: width 0.3s ease-in-out;
+  flex-shrink: 0;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.sidebar.collapsed {
+  width: 80px;
+}
+
+.sidebar-header {
+  padding: 20px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.menu-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 25px;
+  color: #333;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.sidebar.collapsed .menu-item {
+  justify-content: center;
+  padding: 15px 10px;
+}
+
+.menu-item:hover, .menu-item.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  font-weight: bold;
+}
+
+.menu-icon {
+  font-size: 1.5rem;
+  min-width: 30px;
+}
+
+.menu-text {
+  margin-left: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+}

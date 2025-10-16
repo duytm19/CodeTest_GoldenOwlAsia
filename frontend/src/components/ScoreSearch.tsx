@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { CandidateData, ApiErrorResponse } from '../types';
-
-// Helper to make subject codes more readable
+import { CandidateData } from '../types';
+import { useApi } from '../hooks/useApi'; 
 const subjectNames: { [key: string]: string } = {
   toan: 'Mathematics',
   ngu_van: 'Literature',
@@ -16,51 +14,26 @@ const subjectNames: { [key: string]: string } = {
 };
 
 const ScoreSearch: React.FC = () => {
-  // State management
+
   const [regNumber, setRegNumber] = useState<string>('');
-  const [candidate, setCandidate] = useState<CandidateData | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [validationError, setValidationError] = useState<string | null>(null);
+
+  const { data: candidate, isLoading, error, fetchData } = useApi<CandidateData>();
 
   const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent page reload on form submission
+    e.preventDefault();
+    setValidationError(null);
 
-    // Clear previous results and errors
-    setIsLoading(true);
-    setCandidate(null);
-    setError(null);
-
-    // Frontend validation based on your Zod schema
     if (regNumber.length !== 8) {
-      setError('Registration Number must be exactly 8 characters long.');
-      setIsLoading(false);
+      setValidationError('Registration Number must be exactly 8 characters long.');
       return;
     }
 
-    try {
-      const response = await axios.get(
-        `http://localhost:3000/api/candidates/search?registrationNumber=${regNumber}`
-      );
-      
-      // The backend guarantees a `data` field on success
-      setCandidate(response.data.data);
-
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        const errorData = err.response?.data as ApiErrorResponse;
-        // Use the specific error message from the backend
-        setError(errorData?.message || 'An unknown error occurred.');
-      } else {
-        setError('Failed to connect to the server.');
-      }
-      console.error('API Error:', err);
-    } finally {
-      setIsLoading(false);
-    }
+    fetchData(`/candidates/search?registrationNumber=${regNumber}`);
   };
 
   return (
-    <div style={{ maxWidth: '700px', margin: '40px auto', fontFamily: 'Arial, sans-serif' }}>
+    <>
       <h1>Search Exam Scores 🎓</h1>
       <form onSubmit={handleSearch} style={{ display: 'flex', marginBottom: '2rem' }}>
         <input
@@ -76,8 +49,12 @@ const ScoreSearch: React.FC = () => {
         </button>
       </form>
 
-      {/* --- Display Results --- */}
-      {error && <p style={{ color: 'red', fontWeight: 'bold' }}>Error: {error}</p>}
+      
+      {(error || validationError) && (
+        <p style={{ color: 'red', fontWeight: 'bold' }}>
+          Error: {error || validationError}
+        </p>
+      )}
 
       {candidate && (
         <div>
@@ -90,7 +67,7 @@ const ScoreSearch: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {candidate.scores.map((score) => (
+              {candidate && candidate.scores.map((score) => (
                 <tr key={score.subjectCode}>
                   <td style={{ padding: '10px', border: '1px solid #ddd' }}>
                     {subjectNames[score.subjectCode] || score.subjectCode}
@@ -105,7 +82,7 @@ const ScoreSearch: React.FC = () => {
           </table>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

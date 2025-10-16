@@ -1,10 +1,10 @@
 
+//Search Score
 export interface Score {
   value: number;
   languageCode: string | null;
   subjectCode: string;
 }
-
 
 export interface CandidateData {
   registrationNumber: string;
@@ -20,4 +20,13 @@ export interface ApiErrorResponse {
   success: false;
   message: string;
   error: string;
+}
+//Statistic 
+export interface SubjectStat {
+  subjectCode: string;
+  subjectName: string;
+  studentCount: number;
+  averageScore: number | null;
+  highestScore: number | null;
+  lowestScore: number | null;
 }
